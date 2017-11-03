@@ -36,7 +36,13 @@
     <!-- USERS NEED TO UPDATE THIS FILE -->
     <property file="${inst.resrc}/installers.properties"/>
 
-    <target name="load-properties">
+
+	<path id="lib.path">
+		<fileset dir="${izpack.dir}/lib" includes="*.jar" />
+	</path>
+
+
+	 <target name="load-properties">
         <!-- load properties on demand here so it can evaluate
         and sip-communicator.version property from property file-->
         <property file="${inst.resrc}/ant-build-config.properties"/>
@@ -54,14 +60,14 @@
         </condition>
     </target>
 
-    <!-- define the izpack task in a separate target so that we don't get an
-         error when izpack properties are not set-->
-    <target name="define-izpack-task">
-        <taskdef name="izpack" classpath="${izpack.dir}/lib/compiler.jar"
-                               classname="com.izforge.izpack.ant.IzPackTask"/>
-    </target>
+	<!-- define the izpack task in a separate target so that we don't get an 
+		error when izpack properties are not set -->
+	<target name="define-izpack-task">
+		<taskdef name="izpack" classpathref="lib.path"
+			classname="com.izforge.izpack.ant.IzPackTask" />
+	</target>
 
-    <!-- include ant-contrib tasks-->
+	 <!-- include ant-contrib tasks-->
     <target name="define-ant-contrib-task">
         <taskdef resource="net/sf/antcontrib/antlib.xml"
             classpath="${inst.resrc}/lib/ant-contrib-1.0b3.jar"/>
@@ -4110,5 +4116,7 @@
                        value=".,slf4j-jdk14.jar"/>
         </manifest>
     </target>
+
+</project>
 
 </project>
